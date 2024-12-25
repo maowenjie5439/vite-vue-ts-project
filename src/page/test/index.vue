@@ -3,11 +3,9 @@
 </script>
 
 <template>
-<router-view></router-view>
+    <div>Test</div>
 </template>
 
 <style lang="scss" scoped>
-
-
 
 </style>
