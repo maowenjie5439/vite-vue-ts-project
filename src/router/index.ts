@@ -2,26 +2,14 @@ import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
 import NProgress from 'nprogress' // 引入页面加载进度条
 
 // 定义路由配置
-const routes : RouteRecordRaw[] = [
-    {
-        path: '/',
-        name: 'home',
-        component: () => import('../page/home/index.vue'), // 路由懒加载
-        meta: {
-            title: '首页'
-        },
-        children: []
-    },
-    {
-        path: '/test',
-        name: 'test',
-        component: () => import('../page/test/index.vue'),
-        meta: {
-            title: '测试'
-        }
-    }
-]
+const modules: Record<string, any> = import.meta.glob('./modules/*.ts', {eager: true})
+const routes: RouteRecordRaw[] = []
 
+Object.values(modules).forEach((route) => {
+    routes.push(...route.default)
+})
+
+console.log('routes: ', routes)
 // 创建路由实例
 const router = createRouter({
   history: createWebHistory(), // 使用 HTML5 历史模式
