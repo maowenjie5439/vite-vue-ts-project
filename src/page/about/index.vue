@@ -1,10 +1,13 @@
 <script lang="ts" setup>
-console.log("🚀 ~ import.meta.env:", import.meta.env)
+
 </script>
 
 <template>
-<router-view></router-view>
+关于
 </template>
 
 <style lang="scss" scoped>
+
+
+
 </style>

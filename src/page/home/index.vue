@@ -1,20 +1,15 @@
-<script lang="ts" setup>
-import service from '../../http/request';
-
-console.log(import.meta.env.VITE_APP_API_BASE_URL)
-console.log(import.meta.env.DEV)
-
-const sendRequest = async () => {
-    console.log("sendRequest");
-    const res = await service.post('/common/device/list', {index: -1})
-    console.log(res)
-}
-</script>
-
 <template>
-  <div>Home</div>
-  <router-link to="/test">to test</router-link><br/>
-  <el-button type="success" @click="sendRequest">发送请求</el-button>
+  <div class="wrap-content">
+      <h3>Vite + Vue3 + TypeScript + Element-Plus 企业中台最佳实践</h3>
+  </div>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.wrap-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: max-content;
+  flex-direction: column;
+}
+</style>

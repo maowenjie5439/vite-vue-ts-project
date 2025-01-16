@@ -1,14 +1,22 @@
 import { defineConfig, loadEnv } from "vite";
 import type { UserConfig, ConfigEnv } from "vite";
+import { visualizer } from "rollup-plugin-visualizer";
 import { fileURLToPath } from "url";
 import vue from "@vitejs/plugin-vue";
-// import vueJsx from "@vitejs/plugin-vue-jsx";
-export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
+import { viteMockServe } from "vite-plugin-mock";
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import IconsResolver from 'unplugin-icons/resolver'
+import ElementPlus from 'unplugin-element-plus/vite'
+import Icons from 'unplugin-icons/vite';
+
+export default defineConfig(({ mode }: ConfigEnv): UserConfig & { test: { include: string[] } } => {
     // 获取当前工作目录
     const root = process.cwd();
     // 获取环境变量
     const env = loadEnv(mode, root);
-    console.log(env);
+    console.log("🚀 ~ defineConfig ~ env:", env)
     return {
         // 项目根目录
         root,
@@ -21,6 +29,31 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
             vue(),
             // jsx文件编译插件
             // vueJsx(),
+            // mock插件
+            viteMockServe({
+                // 拦截接口的目录
+                mockPath: "mock",
+                // 是否启用mock
+                enable: env.VITE_APP_USE_MOCK === "true",
+            }),
+            // 开启ElementPlus自动引入CSS
+            ElementPlus({}),
+            // 按需引入插件，自动引入ElementPlus
+            AutoImport({
+                resolvers: [ElementPlusResolver(), IconsResolver()],
+                // 生成类型声明文件
+                dts: 'types/auto-imports.d.ts',
+                // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
+                imports: ['vue', 'vue-router']
+            }),
+            Components({
+                resolvers: [ElementPlusResolver(), IconsResolver()],
+                // 生成类型声明文件
+                dts: 'types/components.d.ts'
+            }),
+            Icons({
+                autoInstall: true
+            })
         ],
         // 运行后本地预览的服务器
         server: {
@@ -65,12 +98,21 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
                 // 也就是项目从哪个文件开始打包
                 input: {
                     index: fileURLToPath(
-                        new URL("./index.html", import.meta.url),
+                        new URL("./index.html", import.meta.url)
                     ),
                 },
-                // 静态资源分类打包
+                plugins: [
+                    visualizer({open: true})
+                ],
                 output: {
                     format: "esm",
+                    // manualChunks: (id: string) => {
+                    //     if (id.includes('node_modules')) {
+                    //         return 'vendor';
+                    //     }else{
+                    //         return 'index'
+                    //     }
+                    // },
                     chunkFileNames: "static/js/[name]-[hash].js",
                     entryFileNames: "static/js/[name]-[hash].js",
                     assetFileNames: "static/[ext]/[name]-[hash].[ext]",
@@ -83,6 +125,16 @@ export default defineConfig(({ mode }: ConfigEnv): UserConfig => {
                 "@": fileURLToPath(new URL("./src", import.meta.url)),
                 "#": fileURLToPath(new URL("./types", import.meta.url)),
             },
+        },
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    // additionalData: `@import "@/styles/index.scss";`,
+                },
+            },
+        },
+        test: {
+            include: ['test/**/*.test.ts'],
         },
     };
 });

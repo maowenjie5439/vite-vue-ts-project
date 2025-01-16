@@ -1,27 +1,29 @@
 import { defineStore } from "pinia";
 import { UserState } from "./types";
-import { LoginRequest, userLogin } from "@/api/user";
+import { LoginRequest} from "@/api/user";
 import pinia from "../index";
 
 export const useUserStoreHook = defineStore('userInfo', {
     state: () : UserState => ({
-        username: '毛文杰',
-        token: '123456',
-        roles: ['admin']
+        username: '',
+        token: '',
+        roles: []
     }),
     getters: {},
     actions: {
-       storeUserLogin(data:LoginRequest){
-        return userLogin(data).then((res)=>{
-            this.username = res.username
-            this.token = res.accessToken
-            this.roles = res.roles
-            return res;
-        })
-        .catch((err)=>{
-            return err;
-        })
-       }
+        set(user: any) {
+            this.username = user.username
+            this.token = user.token
+            this.roles = user.roles
+        },
+        clear() {
+            this.username = ''
+            this.token = ''
+            this.roles = []
+        },
+        get() {
+            return this.$state
+        }
     },
     persist: true
 })

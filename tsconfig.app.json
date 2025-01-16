@@ -18,8 +18,9 @@
 
     /* Linting */
     "strict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
+    // 关闭未使用变量警告
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
     "noFallthroughCasesInSwitch": true,
     // "noUncheckedSideEffectImports": true
 
@@ -30,6 +31,8 @@
   "include": [
     "src/**/*.ts",
     "src/**/*.tsx",
-    "src/**/*.vue"
+    "src/**/*.vue",
+    "test/**/*.test.ts",
+    "types/**/*.d.ts"
   ]
 }

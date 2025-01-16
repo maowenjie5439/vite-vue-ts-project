@@ -1,11 +1,18 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, RouteLocationNormalizedGeneric, RouteRecordRaw } from 'vue-router'
 import NProgress from 'nprogress' // 引入页面加载进度条
+import { useUserStore } from '@/store/user'
+import { useCommonStore } from '@/store/common'
+import { useRoute } from 'vue-router'
 
+const userStore = useUserStore()
+const commonStore = useCommonStore()
+const route = useRoute()
 // 定义路由配置
 const modules: Record<string, any> = import.meta.glob('./modules/*.ts', {eager: true})
 const routes: RouteRecordRaw[] = []
 
 Object.values(modules).forEach((route) => {
+    console.log('route: ', route)
     routes.push(...route.default)
 })
 
@@ -19,10 +26,16 @@ const router = createRouter({
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
     NProgress.start()
-    // 添加一个人为延迟用于测试
-    // setTimeout(() => {
-        next()
-    // }, 1000) // 延迟1秒
+    // debugger
+    console.log("🚀 ~ router.beforeEach ~ userStore.get():", userStore.get())
+    if(to.path !== '/login' && !userStore.get().token) {
+        next('/login')
+    }
+    next()
+    console.log("🚀 ~ router.beforeEach ~ from:", from.path)
+    console.log("🚀 ~ router.beforeEach ~ to:", to.path)
+    // 处理路由
+    handleRoute(to)
 }) 
 
 // 全局后置守卫
@@ -30,4 +43,31 @@ router.afterEach(() => {
     NProgress.done() // 路由跳转完成后结束进度条
 })
 
+// 记录所有的路由
+const handleRoute = (to: RouteLocationNormalizedGeneric) =>{
+    console.log("🚀 ~ handleRoute ~ to:", to)
+    // 记录所有的路由
+    const allRoutes = router.getRoutes()
+    console.log("🚀 ~ handleRoute ~ allRoutes:", allRoutes)
+
+    let parentRouteName = to.name as string
+    const currentRouteNameList = []
+    // 递归查找父级路由
+    while(true){
+        const route = allRoutes.find(item => item.name === parentRouteName)
+        if(route){
+            currentRouteNameList.push(route.name)
+            parentRouteName = route.meta.parentRouteName as string
+        }else{
+            break
+        }
+    }
+    // 反转
+    currentRouteNameList.reverse()
+    console.log("🚀 ~ handleRoute ~ currentRouteNameList:", currentRouteNameList)
+    // 保存当前路由数据到store
+    commonStore.$state.currentRouteNameList = currentRouteNameList as string[]
+
+}
 export default router
+
