@@ -7,6 +7,7 @@ import { useRoute } from 'vue-router'
 const userStore = useUserStore()
 const commonStore = useCommonStore()
 const route = useRoute()
+
 // 定义路由配置
 const modules: Record<string, any> = import.meta.glob('./modules/*.ts', {eager: true})
 const routes: RouteRecordRaw[] = []
@@ -28,7 +29,7 @@ router.beforeEach((to, from, next) => {
     NProgress.start()
     // debugger
     console.log("🚀 ~ router.beforeEach ~ userStore.get():", userStore.get())
-    if(to.path !== '/login' && !userStore.get().token) {
+    if(to.path !== '/login' && !userStore.get().token && to.path !== '/test') {
         next('/login')
     }
     next()

@@ -1,7 +1,7 @@
 <template>
     <div class="login-box">
         <div class="login-form">
-            <h1>后台管理系统</h1>
+            <h2>后台管理系统</h2>
             <el-form show-message :model="userInfo" :rules="rules" center class="login-info">
                 <el-form-item prop="username">
                     <el-input v-model="userInfo.username" type="text" :prefix-icon="User"
@@ -13,6 +13,9 @@
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" style="width: 100%" @click="userLogin">登录</el-button>
+                </el-form-item>
+                <el-form-item>
+                    <router-link to="/test">测试页面</router-link>
                 </el-form-item>
             </el-form>
         </div>
