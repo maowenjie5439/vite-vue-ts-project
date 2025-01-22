@@ -37,9 +37,9 @@ const closeSetting = function () {
 };
 
 const logout = function () {
-    debugger
+    // debugger
     userStore.clear()
-    console.log("userStore.get(): ", userStore.get())
+    console.log("userStore.getToken(): ", userStore.getToken())
     router.push('/login');
 };
 </script>

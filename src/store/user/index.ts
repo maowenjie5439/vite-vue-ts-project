@@ -21,8 +21,8 @@ export const useUserStoreHook = defineStore('userInfo', {
             this.token = ''
             this.roles = []
         },
-        get() {
-            return this.$state
+        getToken() {
+            return this.$state.token
         }
     },
     persist: true

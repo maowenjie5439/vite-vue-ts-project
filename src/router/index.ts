@@ -28,8 +28,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     NProgress.start()
     // debugger
-    console.log("🚀 ~ router.beforeEach ~ userStore.get():", userStore.get())
-    if(to.path !== '/login' && !userStore.get().token && to.path !== '/test') {
+    console.log("🚀 ~ router.beforeEach ~ userStore.get():", userStore.getToken())
+    if(to.path !== '/login' && !userStore.getToken() && to.path !== '/test') {
         next('/login')
     }
     next()
