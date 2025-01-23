@@ -1,15 +1,23 @@
+<script lang="ts" setup>
+import service from '@/http/request'
+const onClick = () => {
+    service.get('/getUserList').then(res => {
+        console.log("🚀 ~ onClick ~ res:", res)
+    })
+}
+</script>
+
 <template>
-  <div class="wrap-content">
-      <h3>Vite + Vue3 + TypeScript + Element-Plus 企业中台最佳实践</h3>
-  </div>
+<div class="title-box">
+    <span>首页</span>
+</div>
+<div class="content-box">
+    <van-button type="primary" @click="onClick">获取用户列表</van-button>
+</div>
 </template>
 
 <style lang="scss" scoped>
-.wrap-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: max-content;
-  flex-direction: column;
+.title-box {
+    text-align: center;
 }
 </style>

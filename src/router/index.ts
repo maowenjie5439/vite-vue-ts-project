@@ -28,15 +28,15 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     NProgress.start()
     // debugger
-    console.log("🚀 ~ router.beforeEach ~ userStore.get():", userStore.getToken())
-    if(to.path !== '/login' && !userStore.getToken() && to.path !== '/test') {
-        next('/login')
-    }
+    // console.log("🚀 ~ router.beforeEach ~ userStore.get():", userStore.getToken())
+    // if(to.path !== '/login' && !userStore.getToken() && to.path !== '/test') {
+    //     next('/login')
+    // }
     next()
     console.log("🚀 ~ router.beforeEach ~ from:", from.path)
     console.log("🚀 ~ router.beforeEach ~ to:", to.path)
     // 处理路由
-    handleRoute(to)
+    // handleRoute(to)
 }) 
 
 // 全局后置守卫

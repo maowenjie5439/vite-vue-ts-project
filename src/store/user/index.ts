@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { UserState } from "./types";
-import { LoginRequest} from "@/api/user";
 import pinia from "../index";
 
 export const useUserStoreHook = defineStore('userInfo', {
@@ -24,8 +23,7 @@ export const useUserStoreHook = defineStore('userInfo', {
         getToken() {
             return this.$state.token
         }
-    },
-    persist: true
+    }
 })
 
 // defineStore 返回的是一个函数，不是 store 实例本身

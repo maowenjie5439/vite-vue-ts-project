@@ -4,8 +4,6 @@ import axios, {
     AxiosResponse,
     InternalAxiosRequestConfig,
 } from "axios";
-import { ElMessage } from "element-plus";
-import config from "../../config/development.config";
 import constants from "@/http/constants";
 
 interface BaseResponse<T> {
@@ -28,7 +26,7 @@ service.interceptors.request.use(
         return config;
     },
     (error: AxiosError) => {
-        ElMessage.error("请求出错了, " + error.message);
+        console.log("请求出错了, " + error.message);
         console.log("🚀 request ~ error:", error);
         return Promise.reject(error);
     }
@@ -41,9 +39,16 @@ service.interceptors.response.use(
         // 对响应数据做点什么
         console.log("🚀 ~ response ~ response:", response);
         if (response.status === 200) {
+            // showToast({
+            //     message: '请求成功',
+            //     position: 'top',
+            //   });
             return response.data;
         }
-        ElMessage.error("服务异常");
+        showToast({
+            message: '服务异常',
+            position: 'top',
+          });
         return response.data
     },
     (error: AxiosError) => {
@@ -52,10 +57,16 @@ service.interceptors.response.use(
         console.log("🚀 ~ response ~ error:", error);
         const { response } = error;
         if (response) {
-            ElMessage.error(error.message);
+            // showToast({
+            //     message: (response.data as BaseResponse<any>).message,
+            //     position: 'top',
+            //   });
             return Promise.reject(error);
         }
-        ElMessage.error("网络连接异常，请稍后再试");
+        showToast({
+            message: '网络连接异常，请稍后再试',
+            position: 'top',
+          });
     }
 );
 
@@ -69,16 +80,10 @@ const requestInstance = <T = any>(config: AxiosRequestConfig): Promise<BaseRespo
             .then((res: BaseResponse<T>) => {
                 const data = res; // 如果data.code为错误代码返回message信息
                 if (!constants.isSuccess(data.code)) {
-                    ElMessage({
-                        message: data.message ?? '服务异常',
-                        type: "error",
-                    });
+                    console.log(data.message ?? '服务异常');
                     reject(data);
                 } else {
-                    ElMessage({
-                        message: data.message ?? 'success',
-                        type: "success",
-                    }); // 此处返回data信息 也就是 api 中配置好的 Response类型
+                    console.log(data.message ?? 'success');
                     resolve(data);
                 }
             });

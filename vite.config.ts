@@ -6,11 +6,10 @@ import vue from "@vitejs/plugin-vue";
 import { viteMockServe } from "vite-plugin-mock";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
-import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import IconsResolver from "unplugin-icons/resolver";
-import ElementPlus from "unplugin-element-plus/vite";
 import Icons from "unplugin-icons/vite";
 import ViteCompression from "vite-plugin-compression";
+import { VantResolver } from "@vant/auto-import-resolver";
 
 export default defineConfig(
     ({ mode }: ConfigEnv): UserConfig & { test: { include: string[] } } => {
@@ -47,11 +46,9 @@ export default defineConfig(
                     // 是否启用mock
                     enable: env.VITE_APP_USE_MOCK === "true",
                 }),
-                // 开启ElementPlus自动引入CSS
-                ElementPlus({}),
                 // 按需引入插件，自动引入ElementPlus，处理 API 级别的自动导入
                 AutoImport({
-                    resolvers: [ElementPlusResolver(), IconsResolver()],
+                    resolvers: [IconsResolver(), VantResolver()],
                     // 生成类型声明文件
                     dts: "types/auto-imports.d.ts",
                     // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等
@@ -59,7 +56,7 @@ export default defineConfig(
                 }),
                 // 按需引入插件，处理组件级别的自动导入
                 Components({
-                    resolvers: [ElementPlusResolver(), IconsResolver()],
+                    resolvers: [IconsResolver(), VantResolver()],
                     // 生成类型声明文件
                     dts: "types/components.d.ts",
                 }),

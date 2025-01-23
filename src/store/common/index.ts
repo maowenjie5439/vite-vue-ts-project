@@ -9,8 +9,7 @@ export const useCommonStoreHook = defineStore('common', {
     getters: {},
     actions: {
         
-    },
-    persist: true
+    }
 })
 
 // defineStore 返回的是一个函数，不是 store 实例本身
