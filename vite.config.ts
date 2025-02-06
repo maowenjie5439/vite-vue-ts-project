@@ -78,23 +78,23 @@ export default defineConfig(
                 cors: true,
                 // 代理服务器
                 // 帮助我们开发时解决跨域问题
-                proxy: {
-                    // 这里的意思是 以/api开头发送的请求都会被转发到 http://xxx:9000
-                    [env.VITE_APP_API_BASEURL]: {
-                        target: "http://localhost:9000",
-                        // 改变 Host Header
-                        changeOrigin: true,
-                        // 发起请求时将 '/api' 替换为 ''
-                        //rewrite: (path) => path.replace(/^\/api/, ""),
-                    },
-                    [env.VITE_APP_MOCK_BASEURL]: {
-                        target: "http://localhost:9000",
-                        // 改变 Host Header
-                        changeOrigin: true,
-                        // 发起请求时将 '/api' 替换为 ''
-                        //rewrite: (path) => path.replace(/^\/api/, ""),
-                    },
-                },
+                // proxy: {
+                //     // 这里的意思是 以/api开头发送的请求都会被转发到 http://xxx:9000
+                //     [env.VITE_APP_API_BASEURL]: {
+                //         target: "http://localhost:9000",
+                //         // 改变 Host Header
+                //         changeOrigin: true,
+                //         // 发起请求时将 '/api' 替换为 ''
+                //         //rewrite: (path) => path.replace(/^\/api/, ""),
+                //     },
+                //     [env.VITE_APP_MOCK_BASEURL]: {
+                //         target: "http://localhost:9000",
+                //         // 改变 Host Header
+                //         changeOrigin: true,
+                //         // 发起请求时将 '/api' 替换为 ''
+                //         //rewrite: (path) => path.replace(/^\/api/, ""),
+                //     },
+                // },
             },
             // 打包配置
             build: {

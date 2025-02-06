@@ -1,10 +1,25 @@
 <script lang="ts" setup>
 import service from '@/http/request'
 const onClick = () => {
-    service.get('/getUserList').then(res => {
+    service.get('/etUserList').then(res => {
         console.log("🚀 ~ onClick ~ res:", res)
     })
 }
+
+const p1 = Promise.resolve(1)
+const p2 = new Promise(resolve => resolve(p1))
+
+p2.then(() => {
+    console.log(2)
+})
+
+p1.then(() =>{
+    console.log(1)
+}).then(() => {
+    console.log(4)
+})
+
+console.log(3)
 </script>
 
 <template>

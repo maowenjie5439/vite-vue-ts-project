@@ -38,6 +38,16 @@ service.interceptors.response.use(
         // 2xx 范围内的状态码都会触发该函数。
         // 对响应数据做点什么
         console.log("🚀 ~ response ~ response:", response);
+        // 检查返回的是否是 HTML
+        if (typeof response.data === 'string' && response.data.includes('<!doctype html>')) {
+            showToast({
+                message: '404 NOT FOUND',
+                position: 'top',
+            });
+            // return response.data
+            // return Promise.reject(new Error('接口不存在'))
+            return null
+        }
         if (response.status === 200) {
             // showToast({
             //     message: '请求成功',
