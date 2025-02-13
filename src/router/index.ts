@@ -13,7 +13,7 @@ const modules: Record<string, any> = import.meta.glob('./modules/*.ts', {eager: 
 const routes: RouteRecordRaw[] = []
 
 Object.values(modules).forEach((route) => {
-    console.log('route: ', route)
+    // console.log('route: ', route)
     routes.push(...route.default)
 })
 
@@ -28,10 +28,10 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     NProgress.start()
     // debugger
-    console.log("🚀 ~ router.beforeEach ~ userStore.get():", userStore.getToken())
-    if(to.path !== '/login' && !userStore.getToken() && to.path !== '/test') {
-        next('/login')
-    }
+    // console.log("🚀 ~ router.beforeEach ~ userStore.get():", userStore.getToken())
+    // if(to.path !== '/login' && !userStore.getToken() && to.path !== '/test') {
+    //     next('/login')
+    // }
     next()
     console.log("🚀 ~ router.beforeEach ~ from:", from.path)
     console.log("🚀 ~ router.beforeEach ~ to:", to.path)

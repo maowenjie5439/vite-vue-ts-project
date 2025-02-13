@@ -5,7 +5,7 @@ const routes = [
     {
         path: "/",
         name: "Layout",
-        component: () => import("@/layout/index.vue"), // 路由懒加载
+        component: () => import("@/page/layout/index.vue"), // 路由懒加载
         meta: {
             title: "首页",
         },
@@ -15,7 +15,7 @@ const routes = [
                 name: "HomePage",
                 component: () =>
                     import(
-                        /* webpackChunkName: "home" */ "@/page/home/index.vue"
+                        /* webpackChunkName: "home" */ "@/page/layout/home/index.vue"
                     ),
                 meta: {
                     isShow: true,
@@ -55,7 +55,7 @@ const routes = [
             {
                 path: "/project",
                 name: "ProjectPage",
-                component: () => import("@/page/project/index.vue"),
+                component: () => import("@/page/layout/project/index.vue"),
                 meta: {
                     isShow: true,
                     title: "项目模块",
@@ -67,7 +67,7 @@ const routes = [
                 name: "UserPage",
                 component: () =>
                     import(
-                        /* webpackChunkName: "user" */ "@/page/user/index.vue"
+                        /* webpackChunkName: "user" */ "@/page/layout/user/index.vue"
                     ),
                 meta: {
                     title: "用户模块",
@@ -80,7 +80,7 @@ const routes = [
                 name: "RolePage",
                 component: () =>
                     import(
-                        /* webpackChunkName: "role" */ "@/page/role/index.vue"
+                        /* webpackChunkName: "role" */ "@/page/layout/role/index.vue"
                     ),
                 meta: {
                     title: "角色模块",
@@ -93,13 +93,23 @@ const routes = [
                 name: "AuthPage",
                 component: () =>
                     import(
-                        /* webpackChunkName: "auth" */ "@/page/auth/index.vue"
+                        /* webpackChunkName: "auth" */ "@/page/layout/auth/index.vue"
                     ),
                 meta: {
                     title: "权限模块",
                     isShow: true,
                     parentRouteName: "Layout",
                 },
+            },
+            {
+                path: '/commandDialog',
+                component: () => import('@/page/layout/commandDialog/index.vue'),
+                name: 'CommandDialog',
+                meta: {
+                    title: '命令式弹框',
+                    isShow: true,
+                    parentRouteName: 'Layout'
+                }
             },
         ],
     },

@@ -1,4 +1,10 @@
 {
+  "compilerOptions": {
+    // ...其他配置
+    "jsx": "preserve",
+    "jsxFactory": "h",
+    "jsxFragmentFactory": "Fragment"
+  },
   "files": [],
   "references": [
     { "path": "./tsconfig.app.json" },

@@ -3,6 +3,7 @@ import type { UserConfig, ConfigEnv } from "vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import { fileURLToPath } from "url";
 import vue from "@vitejs/plugin-vue";
+import vueJsx from "@vitejs/plugin-vue-jsx";
 import { viteMockServe } from "vite-plugin-mock";
 import AutoImport from "unplugin-auto-import/vite";
 import Components from "unplugin-vue-components/vite";
@@ -39,7 +40,7 @@ export default defineConfig(
                 // Vue模板文件编译插件
                 vue(),
                 // jsx文件编译插件
-                // vueJsx(),
+                vueJsx(),
                 // mock插件
                 viteMockServe({
                     // 拦截接口的目录

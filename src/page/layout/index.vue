@@ -29,7 +29,9 @@
                     <el-breadcrumb-item v-for="item in commonStore.$state.currentRouteNameList" :key="item" :to="{ name: item }">{{ item
                         }}</el-breadcrumb-item>
                 </el-breadcrumb>
-                <router-view></router-view>
+                <div class="main-content">
+                    <router-view></router-view>
+                </div>
             </el-main>
         </el-container>
     </el-container>
@@ -47,7 +49,7 @@ console.log("🚀 ~ router.options:", router.options)
 // console.log("🚀 ~ router.getRoutes():", router.getRoutes())
 // const menus = router.getRoutes().filter(item => item.meta.isShow);
 // console.log("🚀 ~ menus:", menus)
-const menus = router.options.routes[0].children!.filter(item => item.meta!.isShow);
+const menus = router.options.routes.find(route => route.path === '/')!.children!.filter(item => item.meta!.isShow);
 
 onMounted(() => {
     console.log("🚀 ~ onMounted ~ commonStore.currentRouteNameList:", commonStore.currentRouteNameList)
@@ -65,5 +67,10 @@ onMounted(() => {
     .el-menu {
         height: 100%;
     }
+}
+
+.main-content {
+    display: flex;
+    margin: auto;
 }
 </style>
