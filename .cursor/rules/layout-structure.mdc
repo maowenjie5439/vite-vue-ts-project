@@ -1,0 +1,38 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 布局结构
+
+## 主布局组件
+[src/page/layout/index.vue](mdc:src/page/layout/index.vue) 是项目的主要布局组件，它使用Element Plus的容器组件构建：
+
+```
+<el-container>
+    <el-header> <!-- 头部 --> </el-header>
+    <el-container>
+        <el-aside> <!-- 侧边栏 --> </el-aside>
+        <el-main> <!-- 主内容区 --> </el-main>
+    </el-container>
+</el-container>
+```
+
+## 布局组件结构
+- **头部 (Header)**: 包含网站标题和用户信息
+- **侧边栏 (Aside)**: 包含基于路由的导航菜单
+- **主内容区 (Main)**: 包含面包屑导航和内容显示区（`<router-view>`）
+
+## 导航菜单
+导航菜单基于路由配置自动生成：
+- 使用 `el-menu` 组件实现路由菜单
+- 支持单层菜单项 (`el-menu-item`) 和多层菜单 (`el-sub-menu`)
+- 菜单项通过 `meta.isShow` 控制是否显示
+- 菜单标题通过 `meta.title` 设置
+
+## 面包屑导航
+面包屑导航基于当前路由路径自动生成：
+- 使用 `el-breadcrumb` 组件实现
+- 从 `commonStore.currentRouteNameList` 获取路由路径
+- 点击面包屑项可以导航到对应路由
+

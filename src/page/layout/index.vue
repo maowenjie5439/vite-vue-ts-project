@@ -71,6 +71,9 @@ onMounted(() => {
 
 .main-content {
     display: flex;
-    margin: auto;
+    flex-direction: column;
+    // flex: 1;
+    box-sizing: border-box;
+    // margin: auto;
 }
 </style>

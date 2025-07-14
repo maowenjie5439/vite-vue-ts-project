@@ -1,3 +1,4 @@
+import component from "element-plus/es/components/tree-select/src/tree-select-option.mjs";
 import { RouteRecordRaw } from "vue-router";
 
 // 定义路由配置
@@ -107,10 +108,63 @@ const routes = [
                 name: 'CommandDialog',
                 meta: {
                     title: '命令式弹框',
+                    isShow: false,
+                    parentRouteName: 'Layout'
+                }
+            },
+            {
+                path: '/nextTickUse',
+                component: () => import('@/page/layout/nextTickUse/index.vue'),
+                name: 'NextTickUse',
+                meta: {
+                    title: 'NextTick使用',
+                    isShow: false,
+                    parentRouteName: 'Layout'
+                }
+            },
+            {
+                path: "/dynamicLoadStaticResources",
+                component: () =>
+                    import(
+                        "@/page/layout/dynamicLoadStaticResources/index.vue"
+                    ),
+                name: "DynamicLoadStaticResources",
+                meta: {
+                    title: '静态资源动态加载',
                     isShow: true,
                     parentRouteName: 'Layout'
                 }
             },
+            {
+                path: '/debounce',
+                component: () => import('@/page/layout/debounce/index.vue'),
+                name: 'Debounce',
+                meta: {
+                    title: '防抖示例',
+                    isShow: true,
+                    parentRouteName: 'Layout'
+                }
+            },
+            {
+                path: '/preloadImg',
+                component: () => import('@/page/layout/preloadImg/index.vue'),
+                name: 'PreloadImg',
+                meta: {
+                    title: '图片预加载',
+                    isShow: true,
+                    parentRouteName: 'Layout'
+                }
+            },
+            {
+                path: '/component',
+                component: () => import('@/page/layout/cmpSecondPackage/index.vue'),
+                name: 'CmpSecondPackage',
+                meta: {
+                    title: '组件二次封装',
+                    isShow: true,
+                    parentRouteName: 'Layout'
+                }
+            }
         ],
     },
 ];

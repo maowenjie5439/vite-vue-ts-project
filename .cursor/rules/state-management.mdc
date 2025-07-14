@@ -1,0 +1,38 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# 状态管理
+
+## Pinia配置
+项目使用Pinia作为状态管理解决方案：
+- [src/store/index.ts](mdc:src/store/index.ts) - Pinia主配置，启用了持久化插件
+
+## 状态模块
+状态管理采用模块化设计：
+- [src/store/common/index.ts](mdc:src/store/common/index.ts) - 通用状态，包含路由信息
+- [src/store/user/index.ts](mdc:src/store/user/index.ts) - 用户状态，包含用户名、令牌和角色
+
+## 状态使用模式
+每个状态模块采用以下模式：
+1. 使用 `defineStore` 定义状态仓库（Hook模式）
+2. 创建包装函数确保使用同一个Pinia实例
+3. 支持持久化存储（`persist: true`）
+
+## 状态访问
+在组件中访问状态的方式：
+```ts
+// 引入状态仓库
+import { useUserStore } from '@/store/user'
+import { useCommonStore } from '@/store/common'
+
+// 使用状态
+const userStore = useUserStore()
+const commonStore = useCommonStore()
+
+// 访问状态
+console.log(userStore.username)
+console.log(commonStore.$state.currentRouteNameList)
+```
+

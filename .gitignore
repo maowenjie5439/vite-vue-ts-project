@@ -26,3 +26,9 @@ dist-ssr
 .vscode
 
 pnpm-lock.yaml
+
+app_client
+
+.idea
+
+.run

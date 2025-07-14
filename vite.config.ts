@@ -1,6 +1,6 @@
 import { defineConfig, loadEnv } from "vite";
 import type { UserConfig, ConfigEnv } from "vite";
-import { visualizer } from "rollup-plugin-visualizer";
+// import { visualizer } from "rollup-plugin-visualizer";
 import { fileURLToPath } from "url";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
@@ -12,9 +12,11 @@ import IconsResolver from "unplugin-icons/resolver";
 import ElementPlus from "unplugin-element-plus/vite";
 import Icons from "unplugin-icons/vite";
 import ViteCompression from "vite-plugin-compression";
+import { preloadImgs } from "./config/plugins/preloadImgs";
 
 export default defineConfig(
     ({ mode }: ConfigEnv): UserConfig & { test: { include: string[] } } => {
+        debugger;
         // 获取当前工作目录
         const root = process.cwd();
         // 获取环境变量
@@ -67,6 +69,12 @@ export default defineConfig(
                 Icons({
                     autoInstall: true,
                 }),
+                preloadImgs({
+                    dir: 'src/assets/imgs/*.{jpg,png, svg}',
+                    attrs: {
+                        rel: 'preload',
+                    }
+                }),
             ],
             // 运行后本地预览的服务器
             server: {
@@ -103,7 +111,7 @@ export default defineConfig(
             // 打包配置
             build: {
                 // 关闭 sorcemap 报错不会映射到源码
-                sourcemap: false,
+                sourcemap: true,
                 // 打包大小超出 400kb 提示警告
                 chunkSizeWarningLimit: 400,
                 rollupOptions: {
@@ -114,7 +122,7 @@ export default defineConfig(
                             new URL("./index.html", import.meta.url)
                         ),
                     },
-                    plugins: [visualizer({ open: true })],
+                    // plugins: [visualizer({ open: true })],
                     // output: {
                     //     format: "esm",
                     //     // 1. 代码分割的chunk文件命名
